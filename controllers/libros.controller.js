@@ -1,6 +1,6 @@
 const libro = require('../models/libros');
 const libroCtrl = {};
-const tokens="Token123"
+const tokens = "Token123"
 
 
 libroCtrl.getLibros = async (req, res) => {
@@ -52,19 +52,18 @@ libroCtrl.getlibro = async (req, res) => {
 };
 
 libroCtrl.editlibro = async (req, res) => {
-    const { id } = req.params.id;
     const newlibro = {
         autor: req.body.autor,
         paginas: req.body.paginas,
         libro: req.body.libro,
         sinopsi: req.body.sinopsi,
         genero: req.body.genero,
+        stok: req.body.stok,
         precio: req.body.precio,
         imagen: req.body.imagen
     }
-    //(id, objeto nuevo, si no existe, crealo)
     if (tokens == req.params.token) {
-        await libro.findByIdAndUpdate(id, { $set: newlibro }, { new: true });
+        await libro.findByIdAndUpdate({'_id': req.params.id}, { $set: newlibro });
         res.json({
             status: 'Libro update'
         });
@@ -73,11 +72,12 @@ libroCtrl.editlibro = async (req, res) => {
             'Error': 'Token error'
         });
     }
+    console.log(req.body);
 };
 
 libroCtrl.deletelibro = async (req, res) => {
     if (tokens == req.params.token) {
-        await user.findByIdAndRemove(req.params.id);
+        await libro.findByIdAndRemove(req.params.id);
         res.json({
             status: 'Libro deleted'
         });
@@ -86,6 +86,7 @@ libroCtrl.deletelibro = async (req, res) => {
             'Error': 'Token error'
         });
     }
+    console.log(req.params.token, req.params);
 
 };
 

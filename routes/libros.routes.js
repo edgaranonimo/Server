@@ -3,14 +3,12 @@ const router = express.Router();
 
 const libroCtrl = require('../controllers/libros.controller');
 
-router.get('/:token', libroCtrl.getLibros);
+router.get('/?:token', libroCtrl.getLibros);
 
-router.post('/:token',libroCtrl.createlibro);
+router.post('/?:token',libroCtrl.createlibro);
 
-router.get('/:id:token',libroCtrl.getlibro);
+router.put('/:id&:token',libroCtrl.editlibro);
 
-router.put('/:id:token',libroCtrl.editlibro);
-
-router.delete('/:id:token',libroCtrl.deletelibro);
+router.delete('/:id&:token',libroCtrl.deletelibro);
 
 module.exports = router;
